@@ -1,14 +1,22 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using Application.Authentication;
+using Domain.Entities;
+using Mapster;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.WebUtilities;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using SurvayBasket.Application.Abstraction;
 using SurvayBasket.Application.Abstraction.Errors;
-using SurvayBasket.Application.Contracts.Auth;
-using SurvayBasket.Application.Services.Auth;
-using SurvayBasket.Domain.Consts;
-using SurvayBasket.Infrastructure.Authentication;
 using SurvayBasket.Infrastructure.Dbcontext;
-using SurvayBasket.Infrastructure.Helpers;
+using SurvayBasket.Infrastructure.Services.Notification;
+using SurveyBasket.Abstraction.Consts;
+using SurveyBasket.Services.Auth;
+using System.Security.Cryptography;
+using System.Text;
+using TechSpire.APi.Contracts.Auth;
 
-namespace SurvayBasket.Infrastructure.Services.Auth;
+namespace Application.Services.Auth;
 
 public class AuthService(
     UserManager<ApplicataionUser> manager,
@@ -16,15 +24,15 @@ public class AuthService(
     , IJwtProvider jwtProvider,
     ILogger<AuthService> logger,
     IEmailSender emailSender,
-    IHttpContextAccessor httpContextAccessor,
+    Microsoft.AspNetCore.Http.IHttpContextAccessor httpContextAccessor,
     AppDbcontext dbcontext) : IAuthService
 {
     private readonly UserManager<ApplicataionUser> manager = manager;
-    private readonly SignInManager<ApplicataionUser> signInManager = signInManager;
+    private readonly SignInManager<ApplicataionUser> signInMaganager = signInManager;
     private readonly IJwtProvider jwtProvider = jwtProvider;
     private readonly ILogger<AuthService> logger = logger;
     private readonly IEmailSender emailSender = emailSender;
-    private readonly IHttpContextAccessor httpContextAccessor = httpContextAccessor;
+    private readonly Microsoft.AspNetCore.Http.IHttpContextAccessor httpContextAccessor = httpContextAccessor;
     private readonly AppDbcontext dbcontext = dbcontext;
     private readonly int RefreshTokenExpiryDays = 60;
 
@@ -46,7 +54,7 @@ public class AuthService(
 
 
         //using signin manager
-        var result = await signInManager.PasswordSignInAsync(user, request.Password, false, true);
+        var result = await signInMaganager.PasswordSignInAsync(user, request.Password, false, true);
 
         if (result.Succeeded)
         {

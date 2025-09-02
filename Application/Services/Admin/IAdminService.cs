@@ -1,6 +1,8 @@
-﻿using SurveyBasket.Contracts.Users;
+﻿using Application.Contracts.Users;
+using SurvayBasket.Application.Abstraction;
+using TechSpire.APi.Contracts.Users;
 
-namespace SurveyBasket.Services.Admin;
+namespace Application.Services.Admin;
 
 public interface IAdminService
 {

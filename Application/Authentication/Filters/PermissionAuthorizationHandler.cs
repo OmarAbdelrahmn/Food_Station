@@ -1,6 +1,4 @@
-﻿using SurvayBasket.Domain.Consts;
-
-namespace SurvayBasket.Infrastructure.Authentication.Filters;
+﻿namespace SurvayBasket.Infrastructure.Authentication.Filters;
 
 public class PermissionAuthorizationHandler : AuthorizationHandler<PermissionRequirement>
 {

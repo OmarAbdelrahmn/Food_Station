@@ -1,6 +1,10 @@
-﻿using SurvayBasket.Domain.Consts;
+﻿using Domain.Entities;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using SurveyBasket.Abstraction.Consts;
 
-namespace SurvayBasket.Infrastructure.EntitiesConfigrations;
+namespace Application.EntitiesConfigrations;
 
 public class UserConfigration : IEntityTypeConfiguration<ApplicataionUser>
 {

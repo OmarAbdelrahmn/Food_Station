@@ -1,12 +1,15 @@
-﻿using SurvayBasket.Application.Abstraction;
+﻿using Domain.Entities;
+using Mapster;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
+using SurvayBasket.Application.Abstraction;
 using SurvayBasket.Application.Abstraction.Errors;
 using SurvayBasket.Application.Contracts.Roles;
-using SurvayBasket.Application.Services.Roles;
-using SurvayBasket.Domain.Consts;
 using SurvayBasket.Infrastructure.Dbcontext;
 
 
-namespace SurvayBasket.Infrastructure.Services.Roles;
+namespace Application.Services.Roles;
 
 public class RoleService(RoleManager<ApplicationRole> roleManager, AppDbcontext dbcontext) : IRoleService
 {

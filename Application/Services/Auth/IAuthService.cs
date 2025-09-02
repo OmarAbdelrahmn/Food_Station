@@ -1,4 +1,7 @@
-﻿namespace SurveyBasket.Services.Auth;
+﻿using SurvayBasket.Application.Abstraction;
+using TechSpire.APi.Contracts.Auth;
+
+namespace SurveyBasket.Services.Auth;
 
 public interface IAuthService
 {

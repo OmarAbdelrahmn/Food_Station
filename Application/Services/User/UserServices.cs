@@ -1,8 +1,12 @@
-﻿using SurvayBasket.Application.Abstraction;
-using SurvayBasket.Application.Contracts.Users;
-using SurvayBasket.Application.Services.User;
+﻿using Domain.Entities;
+using Mapster;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
+using SurvayBasket.Application.Abstraction;
+using TechSpire.APi.Contracts.Users;
 
-namespace SurvayBasket.Infrastructure.Services.User;
+namespace Application.Services.User;
 
 public class UserServices(UserManager<ApplicataionUser> manager) : IUserService
 {
@@ -28,7 +32,7 @@ public class UserServices(UserManager<ApplicataionUser> manager) : IUserService
             .Where(i => i.Id == id)
             .ProjectToType<UserProfileResponse>()
             .SingleAsync();
-        ;
+        
 
         return Result.Success(user);
     }

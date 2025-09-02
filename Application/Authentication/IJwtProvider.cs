@@ -1,4 +1,6 @@
-﻿namespace SurvayBasket.Infrastructure.Authentication;
+﻿using Domain.Entities;
+
+namespace Application.Authentication;
 
 public interface IJwtProvider
 {

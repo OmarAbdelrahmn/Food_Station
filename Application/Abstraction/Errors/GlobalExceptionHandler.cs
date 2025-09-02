@@ -1,8 +1,9 @@
-﻿using Microsoft.AspNetCore.Diagnostics;
-using Microsoft.Extensions.Logging;
+﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
+using System.Web.Http.ExceptionHandling;
 
-namespace SurvayBasket.Application.Abstraction.Errors;
+namespace Application.Abstraction.Errors;
 
 public class GlobalExceptionHandler(ILogger<GlobalExceptionHandler> logger) : IExceptionHandler
 {

@@ -1,6 +1,7 @@
-﻿using SurveyBasket.Contracts.Users;
+﻿using SurvayBasket.Application.Abstraction;
+using TechSpire.APi.Contracts.Users;
 
-namespace SurveyBasket.Services.User;
+namespace Application.Services.User;
 
 public interface IUserService
 {

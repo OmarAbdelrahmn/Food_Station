@@ -96,8 +96,8 @@ public static class InfraDependencies
     }
     public static IServiceCollection AddAuth(this IServiceCollection Services, IConfiguration configuration)
     {
-    //    Services.AddTransient<IAuthorizationHandler, PermissionAuthorizationHandler>();
-    //    Services.AddTransient<IAuthorizationPolicyProvider, PermissionAuthorizationPolicyProvider>();
+        //    Services.AddTransient<IAuthorizationHandler, PermissionAuthorizationHandler>();
+        //    Services.AddTransient<IAuthorizationPolicyProvider, PermissionAuthorizationPolicyProvider>();
 
         Services.AddIdentity<ApplicataionUser, ApplicationRole>()
             .AddEntityFrameworkStores<AppDbcontext>()
@@ -158,18 +158,19 @@ public static class InfraDependencies
                         .AllowAnyHeader());
         });
         return Services;
-}}
-    //public static IServiceCollection AddHangfire(this IServiceCollection Services, IConfiguration configuration)
-    //{
-    //    Services.AddHangfire(config => config
-    //    .SetDataCompatibilityLevel(CompatibilityLevel.Version_180)
-    //    .UseSimpleAssemblyNameTypeSerializer()
-    //    .UseRecommendedSerializerSettings()
-    //    .UseSqlServerStorage(configuration.GetConnectionString("DefaultConnection")));
+    }
+}
+//public static IServiceCollection AddHangfire(this IServiceCollection Services, IConfiguration configuration)
+//{
+//    Services.AddHangfire(config => config
+//    .SetDataCompatibilityLevel(CompatibilityLevel.Version_180)
+//    .UseSimpleAssemblyNameTypeSerializer()
+//    .UseRecommendedSerializerSettings()
+//    .UseSqlServerStorage(configuration.GetConnectionString("DefaultConnection")));
 
-    //    // Add the processing server as IHostedService
-    //    Services.AddHangfireServer();
-    //    return Services;
-    //}
+//    // Add the processing server as IHostedService
+//    Services.AddHangfireServer();
+//    return Services;
+//}
 
 

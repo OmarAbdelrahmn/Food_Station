@@ -1,4 +1,4 @@
-﻿namespace SurveyBasket.Abstraction.Consts;
+﻿namespace Application.Abstraction.Consts;
 
 public static class RegexPatterns
 {

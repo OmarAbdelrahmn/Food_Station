@@ -1,6 +1,9 @@
-﻿using SurvayBasket.Domain.Consts;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using SurveyBasket.Abstraction.Consts;
 
-namespace SurvayBasket.Infrastructure.EntitiesConfigrations;
+namespace Application.EntitiesConfigrations;
 
 public class UserRolesConfigration : IEntityTypeConfiguration<IdentityUserRole<string>>
 {

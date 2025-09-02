@@ -1,6 +1,10 @@
-﻿using System.Text.Json;
+﻿using Domain.Entities;
+using Microsoft.Extensions.Options;
+using SurvayBasket.Infrastructure.Authentication;
+using System.Security.Claims;
+using System.Text.Json;
 
-namespace SurvayBasket.Infrastructure.Authentication;
+namespace Application.Authentication;
 
 public class JwtProvider(IOptions<JwtOptions> options) : IJwtProvider
 {

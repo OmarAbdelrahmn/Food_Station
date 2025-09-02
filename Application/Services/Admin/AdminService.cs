@@ -1,11 +1,16 @@
-﻿using SurvayBasket.Application.Abstraction;
+﻿using Application.Contracts.Users;
+using Application.Services.Roles;
+using Domain.Entities;
+using Mapster;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
+using SurvayBasket.Application.Abstraction;
 using SurvayBasket.Application.Abstraction.Errors;
-using SurvayBasket.Application.Contracts.Users;
-using SurvayBasket.Application.Services.Admin;
-using SurvayBasket.Application.Services.Roles;
 using SurvayBasket.Infrastructure.Dbcontext;
+using TechSpire.APi.Contracts.Users;
 
-namespace SurvayBasket.Infrastructure.Services.Admin;
+namespace Application.Services.Admin;
 
 public class AdminService(
      UserManager<ApplicataionUser> manager
@@ -84,8 +89,8 @@ public class AdminService(
                       c.Key.FirstName,
                       c.Key.LastName,
                       c.Key.Email,
-                      c.Key.IsDisable,
-                      c.SelectMany(x => x.roles)
+                      c.Key.IsDisable
+                      //c.SelectMany(x => x.roles)
                       ))
                   .ToListAsync();
 

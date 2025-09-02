@@ -1,4 +1,6 @@
-﻿namespace SurvayBasket.Infrastructure.Extensions;
+﻿using System.Security.Claims;
+
+namespace Application.Extensions;
 
 public static class UserExtensions
 {

@@ -1,9 +1,7 @@
-﻿using MailKit.Net.Smtp;
-using MailKit.Security;
-using MimeKit;
-using SurvayBasket.Infrastructure.Settings;
+﻿using Microsoft.Extensions.Options;
+using SurvayBasket.Infrastructure.Services.Notification;
 
-namespace SurvayBasket.Infrastructure.Services.Auth;
+namespace Application.Services.Auth;
 
 public class EmailService(IOptions<MailSettings> options) : IEmailSender
 {
