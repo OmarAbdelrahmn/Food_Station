@@ -1,4 +1,4 @@
-﻿namespace SurveyBasket.Abstraction.Consts;
+﻿namespace Application.Abstraction.Consts;
 
 public static class DefaultRoles
 {
@@ -10,4 +10,9 @@ public static class DefaultRoles
     public const string MemberRoleConcurrencyStamp = "A7B75EE9-DB35-480D-9F9F-18D2E499B004";
     public const string MemberRoleId = "77B96C5D-F502-47TF-EE95-ABVN14A3CA22";
     public const string Member = nameof(Member);
+
+
+    public const string ManagerRoleConcurrencyStamp = "17B75EE9-DB35-480D-9F9F-18D2E499B004";
+    public const string ManagerRoleId = "17B96C5D-F502-47TF-EE95-ABVN14A3CA22";
+    public const string Manager = nameof(Manager);
 }

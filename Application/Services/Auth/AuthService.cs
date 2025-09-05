@@ -1,4 +1,5 @@
-﻿using Application.Abstraction.Errors;
+﻿using Application.Abstraction.Consts;
+using Application.Abstraction.Errors;
 using Application.Authentication;
 using Application.Contracts.Auth;
 using Domain.Entities;
@@ -9,7 +10,6 @@ using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using SurvayBasket.Application.Abstraction;
-using SurveyBasket.Abstraction.Consts;
 using System.Security.Cryptography;
 using System.Text;
 
@@ -93,6 +93,7 @@ public class AuthService(
         return Result.Failure<AuthResponse>(error);
 
     }
+
 
     private static string GenerateRefreshToken()
     {
@@ -207,6 +208,38 @@ public class AuthService(
             logger.LogInformation("Configration code : {code}", code);
 
             //await sendemail(user, code);
+
+            await manager.AddToRoleAsync(user, DefaultRoles.Member);
+
+            return Result.Success();
+        }
+        var errors = result.Errors.First();
+        return Result.Failure(new Error(errors.Code, errors.Description, StatusCodes.Status400BadRequest));
+
+    }
+
+    public async Task<Result> AdminRegisterAsync(RegisterRequest request)
+    {
+        var emailisex = await manager.Users.AnyAsync(i => i.Email == request.Email);
+
+        if (emailisex)
+            return Result.Failure(UserErrors.EmailAlreadyExist);
+
+        var user = request.Adapt<ApplicataionUser>();
+
+        var result = await manager.CreateAsync(user, request.Password);
+
+        if (result.Succeeded)
+        {
+            var code = await manager.GenerateEmailConfirmationTokenAsync(user);
+
+            code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
+
+            logger.LogInformation("Configration code : {code}", code);
+
+            //await sendemail(user, code);
+
+            await manager.AddToRoleAsync(user, DefaultRoles.Manager);
 
             return Result.Success();
         }
