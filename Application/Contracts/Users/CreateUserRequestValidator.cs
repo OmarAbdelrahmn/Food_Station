@@ -1,4 +1,8 @@
-﻿namespace TechSpire.APi.Contracts.Users;
+﻿using Application.Abstraction.Consts;
+using Application.Contracts.Users;
+using FluentValidation;
+
+namespace TechSpire.APi.Contracts.Users;
 
 public class CreateUserRequestValidator : AbstractValidator<CreateUserRequest>
 {

@@ -1,4 +1,4 @@
-﻿namespace TechSpire.APi.Contracts.Users;
+﻿namespace Application.Contracts.Users;
 
 public record CreateUserRequest
 (

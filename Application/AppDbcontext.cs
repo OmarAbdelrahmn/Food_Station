@@ -5,10 +5,10 @@ using Microsoft.EntityFrameworkCore.Diagnostics;
 using System.Reflection;
 
 
-namespace SurvayBasket.Infrastructure.Dbcontext;
+namespace Application;
 public class AppDbcontext(DbContextOptions<AppDbcontext> options) : IdentityDbContext<ApplicataionUser, ApplicationRole, string>(options)
 {
-    public required DbSet<Poll> Polls { get; set; }
+    //public required DbSet<Poll> Polls { get; set; }
 
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)

@@ -1,4 +1,4 @@
-﻿namespace TechSpire.APi.Contracts.Auth;
+﻿namespace Application.Contracts.Auth;
 
 public record RegisterRequest
 (

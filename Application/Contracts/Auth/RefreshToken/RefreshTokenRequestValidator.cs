@@ -1,4 +1,6 @@
-﻿namespace TechSpire.APi.Contracts.Auth.RefreshToken;
+﻿using FluentValidation;
+
+namespace Application.Contracts.Auth.RefreshToken;
 
 public class RefreshTokenRequestValidator : AbstractValidator<RefreshTokenRequest>
 {

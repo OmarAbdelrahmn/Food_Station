@@ -1,4 +1,4 @@
-﻿namespace TechSpire.APi.Contracts.Auth.RefreshToken;
+﻿namespace Application.Contracts.Auth.RefreshToken;
 
 public record RefreshTokenRequest
 (

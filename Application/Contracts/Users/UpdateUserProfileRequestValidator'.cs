@@ -1,4 +1,6 @@
-﻿namespace TechSpire.APi.Contracts.Users;
+﻿using FluentValidation;
+
+namespace Application.Contracts.Users;
 
 public class UpdateUserProfileRequestValidator_ : AbstractValidator<UpdateUserProfileRequest>
 {

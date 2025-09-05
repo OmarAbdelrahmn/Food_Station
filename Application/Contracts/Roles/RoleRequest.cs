@@ -1,7 +1,6 @@
-﻿namespace SurvayBasket.Application.Contracts.Roles;
+﻿namespace Application.Contracts.Roles;
 
 public record RoleRequest
 (
-    string Name,
-    IList<string> Permissions
+    string Name
     );

@@ -2,11 +2,11 @@
 using SurvayBasket.Application.Abstraction;
 using ObjectResult = Microsoft.AspNetCore.Mvc.ObjectResult;
 
-namespace Application.Abstraction;
+namespace Food_Station;
 
 public static class ResultExtensions
 {
-    public static Microsoft.AspNetCore.Mvc.ObjectResult ToProblem(this Result result)
+    public static ObjectResult ToProblem(this Result result)
     {
         if (result.IsSuccess)
             throw new InvalidOperationException("Cannot convert a successful result to a problem.");

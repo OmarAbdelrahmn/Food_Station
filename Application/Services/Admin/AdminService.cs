@@ -1,4 +1,5 @@
-﻿using Application.Contracts.Users;
+﻿using Application.Abstraction.Errors;
+using Application.Contracts.Users;
 using Application.Services.Roles;
 using Domain.Entities;
 using Mapster;
@@ -6,9 +7,6 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using SurvayBasket.Application.Abstraction;
-using SurvayBasket.Application.Abstraction.Errors;
-using SurvayBasket.Infrastructure.Dbcontext;
-using TechSpire.APi.Contracts.Users;
 
 namespace Application.Services.Admin;
 

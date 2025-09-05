@@ -1,4 +1,7 @@
-﻿namespace SurvayBasket.Application.Abstraction.Errors;
+﻿using Microsoft.AspNetCore.Http;
+using SurvayBasket.Application.Abstraction;
+
+namespace Application.Abstraction.Errors;
 
 public static class UserErrors
 {

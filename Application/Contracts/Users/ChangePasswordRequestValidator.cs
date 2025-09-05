@@ -1,6 +1,9 @@
 ﻿//using SurveyBasket.Contracts.Users;
 
-namespace TechSpire.APi.Contracts.Users;
+using Application.Abstraction.Consts;
+using FluentValidation;
+
+namespace Application.Contracts.Users;
 
 public class ChangePasswordRequestValidator : AbstractValidator<ChangePasswordRequest>
 {

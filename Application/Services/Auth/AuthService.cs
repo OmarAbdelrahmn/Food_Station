@@ -1,4 +1,6 @@
-﻿using Application.Authentication;
+﻿using Application.Abstraction.Errors;
+using Application.Authentication;
+using Application.Contracts.Auth;
 using Domain.Entities;
 using Mapster;
 using Microsoft.AspNetCore.Http;
@@ -7,14 +9,9 @@ using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using SurvayBasket.Application.Abstraction;
-using SurvayBasket.Application.Abstraction.Errors;
-using SurvayBasket.Infrastructure.Dbcontext;
-using SurvayBasket.Infrastructure.Services.Notification;
 using SurveyBasket.Abstraction.Consts;
-using SurveyBasket.Services.Auth;
 using System.Security.Cryptography;
 using System.Text;
-using TechSpire.APi.Contracts.Auth;
 
 namespace Application.Services.Auth;
 
@@ -23,7 +20,6 @@ public class AuthService(
     SignInManager<ApplicataionUser> signInManager
     , IJwtProvider jwtProvider,
     ILogger<AuthService> logger,
-    IEmailSender emailSender,
     Microsoft.AspNetCore.Http.IHttpContextAccessor httpContextAccessor,
     AppDbcontext dbcontext) : IAuthService
 {
@@ -31,7 +27,6 @@ public class AuthService(
     private readonly SignInManager<ApplicataionUser> signInMaganager = signInManager;
     private readonly IJwtProvider jwtProvider = jwtProvider;
     private readonly ILogger<AuthService> logger = logger;
-    private readonly IEmailSender emailSender = emailSender;
     private readonly Microsoft.AspNetCore.Http.IHttpContextAccessor httpContextAccessor = httpContextAccessor;
     private readonly AppDbcontext dbcontext = dbcontext;
     private readonly int RefreshTokenExpiryDays = 60;
@@ -45,29 +40,20 @@ public class AuthService(
         if (user.IsDisable)
             return Result.Failure<AuthResponse>(UserErrors.Disableuser);
 
-        //using user manager
-        //var TruePassword = await manager.CheckPasswordAsync(user, request.Password);
-
-        //if (!TruePassword)
-        //    return Result.Failure<AuthResponse>(UserErrors.InvalidCredentials);
-
-
-
-        //using signin manager
         var result = await signInMaganager.PasswordSignInAsync(user, request.Password, false, true);
 
         if (result.Succeeded)
         {
             var userRoles = await manager.GetRolesAsync(user);
-            var UserPermissions = await dbcontext.Roles
-                .Join(dbcontext.RoleClaims, role => role.Id,
-                claim => claim.RoleId,
-                (role, claim) => new { role, claim })
-                .Where(x => userRoles.Contains(x.role.Name!))
-                .Select(x => x.claim.ClaimType)
-                .Distinct()
-                .ToListAsync();
-            var (Token, ExpiresIn) = jwtProvider.GenerateToken(user, userRoles, UserPermissions!);
+            //var UserPermissions = await dbcontext.Roles
+            //    .Join(dbcontext.RoleClaims, role => role.Id,
+            //    claim => claim.RoleId,
+            //    (role, claim) => new { role, claim })
+            //    .Where(x => userRoles.Contains(x.role.Name!))
+            //    .Select(x => x.claim.ClaimType)
+            //    .Distinct()
+            //    .ToListAsync();
+            var (Token, ExpiresIn) = jwtProvider.GenerateToken(user, userRoles);
 
             var RefreshToken = GenerateRefreshToken();
 
@@ -148,7 +134,7 @@ public class AuthService(
             .Select(x => x.claim.ClaimType)
             .Distinct()
             .ToListAsync();
-        var (newToken, ExpiresIn) = jwtProvider.GenerateToken(user, userRoles, UserPermissions!);
+        var (newToken, ExpiresIn) = jwtProvider.GenerateToken(user, userRoles);
 
         var newRefreshToken = GenerateRefreshToken();
 
@@ -220,7 +206,7 @@ public class AuthService(
 
             logger.LogInformation("Configration code : {code}", code);
 
-            await sendemail(user, code);
+            //await sendemail(user, code);
 
             return Result.Success();
         }
@@ -281,40 +267,40 @@ public class AuthService(
         logger.LogInformation("Configration code : {code}", code);
 
         //send email
-        await sendemail(user, code);
+        //await sendemail(user, code);
 
         return Result.Success();
     }
 
-    private async Task sendemail(ApplicataionUser user, string code)
-    {
-        var origin = httpContextAccessor.HttpContext?.Request.Headers.Origin;
+    //private async Task sendemail(ApplicataionUser user, string code)
+    //{
+    //    var origin = httpContextAccessor.HttpContext?.Request.Headers.Origin;
 
-        var emailbody = EmailBodyBuilder.GenerateEmailBody("EmailConfirmation",
-            new Dictionary<string, string> {
-                    { "{{name}}", user.FirstName } ,
-                    { "{{action_url}}", $"{origin}/auth/emailconfigration?userid={user.Id}&code={code}" }
+    //    var emailbody = EmailBodyBuilder.GenerateEmailBody("EmailConfirmation",
+    //        new Dictionary<string, string> {
+    //                { "{{name}}", user.FirstName } ,
+    //                { "{{action_url}}", $"{origin}/auth/emailconfigration?userid={user.Id}&code={code}" }
 
-            });
+    //        });
 
-        BackgroundJob.Enqueue(() => emailSender.SendEmailAsync(user.Email!, "Survay basket : Email configration", emailbody));
-        await Task.CompletedTask;
-    }
+    //    BackgroundJob.Enqueue(() => emailSender.SendEmailAsync(user.Email!, "Survay basket : Email configration", emailbody));
+    //    await Task.CompletedTask;
+    //}
 
-    private async Task sendchangepasswordemail(ApplicataionUser user, string code)
-    {
-        var origin = httpContextAccessor.HttpContext?.Request.Headers.Origin;
+    //private async Task sendchangepasswordemail(ApplicataionUser user, string code)
+    //{
+    //    var origin = httpContextAccessor.HttpContext?.Request.Headers.Origin;
 
-        var emailbody = EmailBodyBuilder.GenerateEmailBody("ForgetPassword",
-            new Dictionary<string, string> {
-                    { "{{name}}", user.FirstName } ,
-                    { "{{action_url}}", $"{origin}/auth/forgetpassword?email={user.Email}&code={code}" }
+    //    var emailbody = EmailBodyBuilder.GenerateEmailBody("ForgetPassword",
+    //        new Dictionary<string, string> {
+    //                { "{{name}}", user.FirstName } ,
+    //                { "{{action_url}}", $"{origin}/auth/forgetpassword?email={user.Email}&code={code}" }
 
-            });
+    //        });
 
-        BackgroundJob.Enqueue(() => emailSender.SendEmailAsync(user.Email!, "Survay basket : change password", emailbody));
-        await Task.CompletedTask;
-    }
+    //    BackgroundJob.Enqueue(() => emailSender.SendEmailAsync(user.Email!, "Survay basket : change password", emailbody));
+    //    await Task.CompletedTask;
+    //}
 
     public async Task<Result> ForgetPassordAsync(ForgetPasswordRequest request)
     {
@@ -331,7 +317,7 @@ public class AuthService(
         logger.LogInformation("Reset code : {code}", code);
 
         //send email
-        await sendchangepasswordemail(user, code);
+        //await sendchangepasswordemail(user, code);
 
         return Result.Success();
 

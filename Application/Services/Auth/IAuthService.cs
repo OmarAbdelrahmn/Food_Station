@@ -1,7 +1,7 @@
-﻿using SurvayBasket.Application.Abstraction;
-using TechSpire.APi.Contracts.Auth;
+﻿using Application.Contracts.Auth;
+using SurvayBasket.Application.Abstraction;
 
-namespace SurveyBasket.Services.Auth;
+namespace Application.Services.Auth;
 
 public interface IAuthService
 {
@@ -11,7 +11,6 @@ public interface IAuthService
     Task<Result> ResendEmailAsync(ResendEmailRequest request);
     Task<Result<AuthResponse>> GetRefreshTokenAsync(string Token, string RefreshToken);
     Task<Result> RevokeRefreshTokenAsync(string Token, string RefreshToken);
-
     Task<Result> ForgetPassordAsync(ForgetPasswordRequest request);
     Task<Result> ResetPasswordAsync(ResetPasswordRequest request);
 }

@@ -26,6 +26,10 @@
 ////using Microsoft.OpenApi.Models;
 
 
+using Application;
+using Domain.Entities;
+using SurvayBasket.Infrastructure.Authentication;
+
 namespace Food_Station;
 public static class InfraDependencies
 {
@@ -105,7 +109,7 @@ public static class InfraDependencies
 
         Services.Configure<JwtOptions>(configuration.GetSection("Jwt"));
 
-        Services.Configure<MailSettings>(configuration.GetSection(nameof(MailSettings)));
+        //Services.Configure<MailSettings>(configuration.GetSection(nameof(MailSettings)));
 
         var Jwtsetting = configuration.GetSection("Jwt").Get<JwtOptions>();
 

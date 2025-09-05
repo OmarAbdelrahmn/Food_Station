@@ -1,6 +1,5 @@
 ﻿using Application.Contracts.Users;
 using SurvayBasket.Application.Abstraction;
-using TechSpire.APi.Contracts.Users;
 
 namespace Application.Services.Admin;
 

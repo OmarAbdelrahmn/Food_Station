@@ -1,10 +1,10 @@
-﻿using Domain.Entities;
+﻿using Application.Contracts.Users;
+using Domain.Entities;
 using Mapster;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using SurvayBasket.Application.Abstraction;
-using TechSpire.APi.Contracts.Users;
 
 namespace Application.Services.User;
 

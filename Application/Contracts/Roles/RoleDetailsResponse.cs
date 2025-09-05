@@ -1,9 +1,8 @@
-﻿namespace SurvayBasket.Application.Contracts.Roles;
+﻿namespace Application.Contracts.Roles;
 
 public record RoleDetailsResponse
 (
     string Id,
     string Name,
-    bool IsDeleted,
-    IEnumerable<string> Permissions
+    bool IsDeleted
     );

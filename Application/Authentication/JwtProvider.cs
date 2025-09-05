@@ -1,7 +1,11 @@
 ﻿using Domain.Entities;
 using Microsoft.Extensions.Options;
+using Microsoft.IdentityModel.JsonWebTokens;
+using Microsoft.IdentityModel.Tokens;
 using SurvayBasket.Infrastructure.Authentication;
+using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
+using System.Text;
 using System.Text.Json;
 
 namespace Application.Authentication;
@@ -10,21 +14,20 @@ public class JwtProvider(IOptions<JwtOptions> options) : IJwtProvider
 {
     private readonly JwtOptions options = options.Value;
 
-    public (string Token, int Expiry) GenerateToken(ApplicataionUser user, IEnumerable<string> Roles, IEnumerable<string> Permission)
+    public (string Token, int Expiry) GenerateToken(ApplicataionUser user, IEnumerable<string> Roles)
     {
         Claim[] claims = [
-            new (JwtRegisteredClaimNames.Sub, user.Id),
-            new (JwtRegisteredClaimNames.Email, user.Email!),
-            new (JwtRegisteredClaimNames.GivenName, user.FirstName),
-            new (JwtRegisteredClaimNames.FamilyName, user.LastName),
-            new (JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
-            new (nameof(Roles),JsonSerializer.Serialize(Roles),JsonClaimValueTypes.JsonArray),
-            new (nameof(Permission),JsonSerializer.Serialize(Permission),JsonClaimValueTypes.JsonArray)
+            new (System.IdentityModel.Tokens.Jwt.JwtRegisteredClaimNames.Sub, user.Id),
+            new (System.IdentityModel.Tokens.Jwt.JwtRegisteredClaimNames.Email, user.Email!),
+            new (System.IdentityModel.Tokens.Jwt.JwtRegisteredClaimNames.GivenName, user.FirstName),
+            new (System.IdentityModel.Tokens.Jwt.JwtRegisteredClaimNames.FamilyName, user.LastName),
+            new (System.IdentityModel.Tokens.Jwt.JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
+            new (nameof(Roles),JsonSerializer.Serialize(Roles),System.IdentityModel.Tokens.Jwt.JsonClaimValueTypes.JsonArray)
             ];
 
-        var SymmetricSecurityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(options.Key));
+        var SymmetricSecuritykey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(options.Key));
 
-        var signingCredentials = new SigningCredentials(SymmetricSecurityKey, SecurityAlgorithms.HmacSha256);
+        var signingCredentials = new SigningCredentials(SymmetricSecuritykey, SecurityAlgorithms.HmacSha256);
 
 
         var token = new JwtSecurityToken(
@@ -57,7 +60,7 @@ public class JwtProvider(IOptions<JwtOptions> options) : IJwtProvider
 
             var jwtToken = (JwtSecurityToken)validatedToken;
 
-            return jwtToken.Claims.First(claim => claim.Type == JwtRegisteredClaimNames.Sub).Value;
+            return jwtToken.Claims.First(claim => claim.Type == System.IdentityModel.Tokens.Jwt.JwtRegisteredClaimNames.Sub).Value;
         }
         catch
         {

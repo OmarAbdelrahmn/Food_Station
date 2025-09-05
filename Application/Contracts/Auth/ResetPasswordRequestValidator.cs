@@ -1,4 +1,7 @@
-﻿namespace TechSpire.APi.Contracts.Auth;
+﻿using Application.Abstraction.Consts;
+using FluentValidation;
+
+namespace Application.Contracts.Auth;
 
 public class ResetPasswordRequestValidator : AbstractValidator<ResetPasswordRequest>
 {
