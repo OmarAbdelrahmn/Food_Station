@@ -29,6 +29,15 @@ public class RolesConfigration : IEntityTypeConfiguration<ApplicationRole>
                     NormalizedName = DefaultRoles.Member.ToUpper(),
                     IsDefault = true,
                     IsDeleted = false
+                },
+                 new ApplicationRole
+                {
+                    Id = DefaultRoles.ManagerRoleId,
+                    Name = DefaultRoles.Manager,
+                    ConcurrencyStamp = DefaultRoles.ManagerRoleConcurrencyStamp,
+                    NormalizedName = DefaultRoles.Manager.ToUpper(),
+                    IsDefault = false,
+                    IsDeleted = false
                 }
             ]
         );

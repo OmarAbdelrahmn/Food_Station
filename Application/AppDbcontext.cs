@@ -8,7 +8,7 @@ using System.Reflection;
 namespace Application;
 public class AppDbcontext(DbContextOptions<AppDbcontext> options) : IdentityDbContext<ApplicataionUser, ApplicationRole, string>(options)
 {
-    //public required DbSet<Poll> Polls { get; set; }
+    public required DbSet<Image> Images { get; set; }
 
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
